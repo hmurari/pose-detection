@@ -11,6 +11,8 @@ sys.path.append(UTILS_PATH)
 from video import Video
 from display import Display
 
+# Whether to record the output video or not.
+record = True
 
 if __name__ == '__main__':
 
@@ -52,7 +54,7 @@ if __name__ == '__main__':
         draw(image, counts, objects, peaks)
 
         # render image to display
-        ret = video.show_frame(image)
+        ret = video.show_frame(image, record=record)
         if ret == -1:
             break
 
@@ -60,4 +62,6 @@ if __name__ == '__main__':
         t1 = time.time()
         print('FPS: %f' % (1.0 / (t1 - t0)))
         t0 = t1
-
+    
+    video.destroy()
+    
