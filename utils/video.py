@@ -10,6 +10,7 @@ class Video(object):
         self.qsize = qsize
         self.loop = loop
         self.codec = codec
+        self.video_recorder = cv2.VideoWriter('output.avi', cv2.VideoWriter_fourcc('M','J','P','G'), 10, (640, 480))
         self.reset()
 
     def reset(self):
@@ -26,11 +27,14 @@ class Video(object):
 
     def destroy(self):
         self.cap.release()
-
-    def destroy_window(self):
+        self.video_recorder.release()
         cv2.destroyAllWindows()
 
-    def show_frame(self, frame):
+    def show_frame(self, frame, record=False):
+        # Record video
+        if record is True:
+            self.video_recorder.write(frame)
+        
         cv2.imshow('Test', frame)
         key = cv2.waitKey(10)
         if key == 27 or key == ord('q') or key == ord('Q'):
